@@ -32,3 +32,7 @@ Just run the command below.  The `ts-jest` library manages all the compilation h
 # Shorthand for npm run test
 npm t
 ```
+
+Successful output looks like:
+
+![](https://user-images.githubusercontent.com/3820981/68163281-308f8e80-ff28-11e9-8d23-07c6c1422eb3.png)
