@@ -78,7 +78,7 @@ describe('Dapp Management User Story', function(){
     });
     expect(updateRes).toBeSuccessResponse();
     expect(updateRes.data).toBeMessageResult();
-    await sleep(500);
+    await sleep(1000);
     const updatedRead = await API.private.readDapp.call(DappName);
     expect(updatedRead).toBeSuccessResponse();
     if (!Responses.isSuccessResponse(updatedRead)) return;
