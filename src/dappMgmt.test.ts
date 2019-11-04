@@ -1,13 +1,9 @@
-import path from 'path';
-import fs from 'fs';
 import casual from 'casual';
 import DappbotAPI from '@eximchain/dappbot-api-client';
-import { getConfiguredAPI, testCreds, DummyDappName, DummyCreateDappArg, getAuthFileData, setAuthFileData, sleep } from './common';
+import { getConfiguredAPI, testConfig, DummyDappName, DummyCreateDappArg, getAuthFileData, setAuthFileData, sleep, DEFAULT_API_URL } from './common';
 import User from '@eximchain/dappbot-types/spec/user';
-import { Login } from '@eximchain/dappbot-types/spec/methods/auth';
 import Responses from '@eximchain/dappbot-types/spec/responses';
-import { apiBasePath } from '@eximchain/dappbot-types/spec/methods';
-import Dapp, { Chain } from '@eximchain/dappbot-types/spec/dapp';
+import Dapp from '@eximchain/dappbot-types/spec/dapp';
 
 /**
  * Verify that all dapp management calls are behaving
@@ -15,19 +11,23 @@ import Dapp, { Chain } from '@eximchain/dappbot-types/spec/dapp';
  * test suite assumes it has access to a fully initialized
  * user.
  */
-let DappName:string;
+let DappName:string, username:string, password:string;
 let API:DappbotAPI;
+let DappbotURL = DEFAULT_API_URL;
+
+beforeAll(() => {
+  const conf = testConfig();
+  DappbotURL = conf.apiUrl || DEFAULT_API_URL;
+  console.log(`\nAbout to run test against ${DappbotURL} ...`);
+  username = conf.username;
+  password = conf.password;
+})
 
 beforeEach(() => {
-  API = getConfiguredAPI(getAuthFileData());
+  API = getConfiguredAPI(getAuthFileData(), DappbotURL);
 })
 
 describe('Dapp Management User Story', function(){
-  const loginCreds = testCreds();
-  const loginArgs:Login.Args = {
-    username: loginCreds.username,
-    password: loginCreds.password
-  }
 
   test('Health Check: API URL is returning valid response shape', async () => {
     try {
@@ -39,7 +39,7 @@ describe('Dapp Management User Story', function(){
   })
 
   test('Login: Valid credentials returns success response', async () => {
-    const response = await API.auth.login.call(loginArgs);
+    const response = await API.auth.login.call({ username, password });
     expect(response).toBeSuccessResponse();
     if (!Responses.isSuccessResponse(response)) return;
     expect(response.data).toBeAuthData();

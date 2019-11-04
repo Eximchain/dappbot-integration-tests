@@ -1,33 +1,51 @@
 import fs from 'fs';
 import path from 'path';
-import User, { isAuthData } from '@eximchain/dappbot-types/spec/user';
+import User from '@eximchain/dappbot-types/spec/user';
 import DappbotAPI from '@eximchain/dappbot-api-client';
 import Responses from '@eximchain/dappbot-types/spec/responses';
-import { Auth } from '@eximchain/dappbot-types/spec/methods';
 import Dapp from '@eximchain/dappbot-types/spec/dapp';
 import casual from 'casual';
 import { CreateDapp } from '@eximchain/dappbot-types/spec/methods/private';
-export const TEST_API = 'https://api-staging.dapp.bot';
 
 
 export function sleep(ms:number) {
   return new Promise((res) => setTimeout(res, ms));
 }
 
-export function testCreds(){
-  const credsPath = path.resolve(process.cwd(), './test-creds.json');
+export const DEFAULT_API_URL = 'https://api-staging.dapp.bot';
+const TEST_CONFIG_FILENAME = './test-config.json';
+
+interface TestConfig {
+  username: string
+  password: string
+  apiUrl?: string
+}
+
+function isTestConfig(val:any):val is TestConfig {
+  return (
+    typeof val === 'object' &&
+    typeof val.username === 'string' &&
+    typeof val.password === 'string'
+  )
+}
+
+export function testConfig():TestConfig{
+  const credsPath = path.resolve(process.cwd(), TEST_CONFIG_FILENAME);
   if (fs.existsSync(credsPath)) {
-    return JSON.parse(fs.readFileSync(credsPath).toString())
+    const testConfig = JSON.parse(fs.readFileSync(credsPath).toString());
+    if (!isTestConfig(testConfig)) {
+      throw new Error(`Your test-config.json file exists, but is missing "username" and "password" fields.`)
+    } else return testConfig;
   } else {
-    throw new Error(`Please create a file with a valid "username" and "password" at ${credsPath}`);
+    throw new Error(`Please create a file with a valid "apiUrl", "username", & "password" at ${credsPath}`);
   }
 }
 
-export function getConfiguredAPI(existingAuth?:User.AuthData) {
+export function getConfiguredAPI(existingAuth?:User.AuthData, apiUrl:string='https://api-staging.dapp.bot') {
   return new DappbotAPI({
     authData: existingAuth || User.newAuthData(),
     setAuthData: setAuthFileData,
-    dappbotUrl: TEST_API
+    dappbotUrl: apiUrl
   })
 }
 

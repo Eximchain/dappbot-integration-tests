@@ -4,7 +4,8 @@
   "description": "Private integration test suite which validates DappBot behavior on deployed infra",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -17,8 +18,9 @@
   },
   "homepage": "https://github.com/Eximchain/dappbot-integration-tests#readme",
   "dependencies": {
-    "@eximchain/dappbot-api-client": "^1.2.3",
-    "@eximchain/dappbot-types": "^1.7.9"
+    "@eximchain/dappbot-api-client": "^1.2.4",
+    "@eximchain/dappbot-types": "^1.7.9",
+    "axios": "^0.19.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.4",

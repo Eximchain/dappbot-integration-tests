@@ -11,9 +11,25 @@ foo@bar:~$ cd dappbot-integration-tests
 foo@bar:~/dappbot-integration-tests$ npm i
 foo@bar:~/dappbot-integration-tests$ npm run build
 
-# One-time: Configure the API URL & your test credentials
-foo@bar:~/dappbot-integration-tests$ npm run setup
+# One-time: Create a test credentials JSON file
+# at ./test-config.json which contains a valid
+# `apiUrl`, `username`, & `password`.  Testing
+# currently requires a valid account, cannot
+# perform full signup loop without inbox integration.
 
 # Run to perform an integration test
 foo@bar:~/dappbot-integration-tests$ npm run test
 ```
+
+Sample `test-config.json`:
+
+```json
+{
+  "apiUrl": "https://api-staging.dapp.bot",
+  "username": "john+foo@eximchain.com",
+  "password": "password"
+}
+```
+
+- If the file does not specify an `apiUrl`, the tests will default to staging (URL shown above).
+- If the file does not specify `username` & `password`, all tests of private API endpoints will just fail.
