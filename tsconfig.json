@@ -9,5 +9,9 @@
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true
+  },
+  "jest": {
+    "moduleFileExtensions": ["js", "ts"],
+    "moduleDirectories": ["node_modules"]
   }
 }

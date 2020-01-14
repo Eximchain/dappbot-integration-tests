@@ -110,6 +110,14 @@ expect.extend({
     return { pass, message };
   },
 
+  toBeUserData(received) {
+    const pass = User.isUserData(received);
+    const message = () => pass ? 
+      'Did not expect to get UserData, but we did.' :
+      `Expected to get UserData, but instead got the following object: ${prettyPrint(received)}`;
+    return { pass, message };
+  },
+
   toBeAuthData(received) {
     const pass = User.isAuthData(received);
     const message = () => pass ? 
@@ -159,6 +167,7 @@ declare global {
       toBeSuccessResponse(): R;
       toBeErrResponse(): R;
       toBeMessageResult(): R;
+      toBeUserData(): R;
       toBeAuthData(): R;
       toBeChallengeData(): R;
       toBeItemApi(): R;

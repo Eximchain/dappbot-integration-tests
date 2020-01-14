@@ -29,15 +29,6 @@ beforeEach(() => {
 
 describe('Dapp Management User Story', function(){
 
-  test('Health Check: API URL is returning valid response shape', async () => {
-    try {
-      const response = await API.public.viewDapp.call('NotADapp');
-      expect(response).toBeDappbotResponse();
-    } catch (err) {
-      expect(err.response.toJSON().body).toBeDappbotResponse();
-    }
-  })
-
   test('Login: Valid credentials returns success response', async () => {
     const response = await API.auth.login.call({ username, password });
     expect(response).toBeSuccessResponse();
