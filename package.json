@@ -21,8 +21,10 @@
     "@eximchain/dappbot-api-client": "^1.2.6",
     "@eximchain/dappbot-types": "^1.7.9",
     "@types/prompts": "^2.0.3",
+    "@types/stripe": "^7.13.20",
     "axios": "^0.19.0",
-    "prompts": "^2.3.0"
+    "prompts": "^2.3.0",
+    "stripe": "^8.4.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.4",

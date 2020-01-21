@@ -16,7 +16,6 @@ beforeAll(() => {
   const [address, domain] = username.split('@');
   const randomTag = casual.uuid.slice(0, 8);
   username = `${address}+${randomTag}@${domain}`;
-  console.log('Running signupStory w/ username: ',username);
 })
 
 describe('Register Account User Story', function(){

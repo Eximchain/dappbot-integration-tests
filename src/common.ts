@@ -19,6 +19,7 @@ interface TestConfig {
   username: string
   password: string
   apiUrl?: string
+  stripeApiKey?: string
 }
 
 function isTestConfig(val:any):val is TestConfig {
